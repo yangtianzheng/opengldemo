@@ -8,7 +8,7 @@
     tools:context="com.example.administrator.opengltest.MainActivity">
 
     <Button
-        android:id="@+id/btn_Draw"
+        android:id="@+id/btn_draw"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="绘制形体" />
@@ -18,5 +18,12 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="相机处理" />
+
+    <Button
+        android:id="@+id/btn_fbo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="FBO处理图片" />
 
 </LinearLayout>

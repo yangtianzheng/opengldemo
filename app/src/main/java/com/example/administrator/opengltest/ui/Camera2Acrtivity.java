@@ -25,6 +25,7 @@ import android.view.SurfaceView;
 
 import com.example.administrator.opengltest.R;
 import com.example.administrator.opengltest.camera.FrameCallback;
+import com.example.administrator.opengltest.camera.TextureController;
 
 import java.util.Arrays;
 
@@ -77,69 +78,69 @@ public class Camera2Acrtivity extends Activity implements FrameCallback{
                 mDevice.close();
                 mDevice=null;
             }
-            try {
-                CameraCharacteristics c=mCameraManager.getCameraCharacteristics(cameraId+"");
-                StreamConfigurationMap map=c.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
-                Size[] sizes=map.getOutputSizes(SurfaceHolder.class);
-                mPreviewSize=sizes[0];
-                mController.setDataSize(mPreviewSize.getHeight(),mPreviewSize.getWidth());
-                mCameraManager.openCamera(cameraId + "", new CameraDevice.StateCallback() {
-                    @Override
-                    public void onOpened(CameraDevice camera) {
-                        mDevice=camera;
-                        try {
-                            Surface surface=new Surface(mController
-                                    .getTexture());
-                            final CaptureRequest.Builder builder=mDevice.createCaptureRequest
-                                    (TEMPLATE_PREVIEW);
-                            builder.addTarget(surface);
-                            mController.getTexture().setDefaultBufferSize(
-                                    mPreviewSize.getWidth(),mPreviewSize.getHeight());
-                            mDevice.createCaptureSession(Arrays.asList(surface), new
-                                    CameraCaptureSession.StateCallback() {
-                                        @Override
-                                        public void onConfigured(CameraCaptureSession session) {
-                                            try {
-                                                session.setRepeatingRequest(builder.build(), new CameraCaptureSession.CaptureCallback() {
-                                                    @Override
-                                                    public void onCaptureProgressed(CameraCaptureSession session, CaptureRequest request, CaptureResult partialResult) {
-                                                        super.onCaptureProgressed(session, request, partialResult);
-                                                    }
-
-                                                    @Override
-                                                    public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
-                                                        super.onCaptureCompleted(session, request, result);
-                                                        mController.requestRender();
-                                                    }
-                                                },mHandler);
-                                            } catch (CameraAccessException e) {
-                                                e.printStackTrace();
-                                            }
-                                        }
-
-                                        @Override
-                                        public void onConfigureFailed(CameraCaptureSession session) {
-
-                                        }
-                                    },mHandler);
-                        } catch (CameraAccessException e) {
-                            e.printStackTrace();
-                        }
-                    }
-
-                    @Override
-                    public void onDisconnected(CameraDevice camera) {
-                        mDevice=null;
-                    }
-
-                    @Override
-                    public void onError(CameraDevice camera, int error) {
-
-                    }
-                }, mHandler);
-            } catch (SecurityException |CameraAccessException e) {
-                e.printStackTrace();
-            }
+//            try {
+//                CameraCharacteristics c=mCameraManager.getCameraCharacteristics(cameraId+"");
+//                StreamConfigurationMap map=c.get(CameraCharacteristics.SCALER_STREAM_CONFIGURATION_MAP);
+//                Size[] sizes=map.getOutputSizes(SurfaceHolder.class);
+//                mPreviewSize=sizes[0];
+//                mController.setDataSize(mPreviewSize.getHeight(),mPreviewSize.getWidth());
+//                mCameraManager.openCamera(cameraId + "", new CameraDevice.StateCallback() {
+//                    @Override
+//                    public void onOpened(CameraDevice camera) {
+//                        mDevice=camera;
+//                        try {
+//                            Surface surface=new Surface(mController
+//                                    .getTexture());
+//                            final CaptureRequest.Builder builder=mDevice.createCaptureRequest
+//                                    (TEMPLATE_PREVIEW);
+//                            builder.addTarget(surface);
+//                            mController.getTexture().setDefaultBufferSize(
+//                                    mPreviewSize.getWidth(),mPreviewSize.getHeight());
+//                            mDevice.createCaptureSession(Arrays.asList(surface), new
+//                                    CameraCaptureSession.StateCallback() {
+//                                        @Override
+//                                        public void onConfigured(CameraCaptureSession session) {
+//                                            try {
+//                                                session.setRepeatingRequest(builder.build(), new CameraCaptureSession.CaptureCallback() {
+//                                                    @Override
+//                                                    public void onCaptureProgressed(CameraCaptureSession session, CaptureRequest request, CaptureResult partialResult) {
+//                                                        super.onCaptureProgressed(session, request, partialResult);
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onCaptureCompleted(CameraCaptureSession session, CaptureRequest request, TotalCaptureResult result) {
+//                                                        super.onCaptureCompleted(session, request, result);
+//                                                        mController.requestRender();
+//                                                    }
+//                                                },mHandler);
+//                                            } catch (CameraAccessException e) {
+//                                                e.printStackTrace();
+//                                            }
+//                                        }
+//
+//                                        @Override
+//                                        public void onConfigureFailed(CameraCaptureSession session) {
+//
+//                                        }
+//                                    },mHandler);
+//                        } catch (CameraAccessException e) {
+//                            e.printStackTrace();
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onDisconnected(CameraDevice camera) {
+//                        mDevice=null;
+//                    }
+//
+//                    @Override
+//                    public void onError(CameraDevice camera, int error) {
+//
+//                    }
+//                }, mHandler);
+//            } catch (SecurityException |CameraAccessException e) {
+//                e.printStackTrace();
+//            }
         }
 
         @Override
